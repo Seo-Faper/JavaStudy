@@ -2,9 +2,10 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello world!");
+        int x = 10;
+        int y = 20;
+        System.out.println((++x)+(y--));
         Scanner sc = new Scanner(System.in);
-        byte a = 10;
 
         int n = sc.nextInt();
     }
