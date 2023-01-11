@@ -4,6 +4,7 @@ import java.util.Map.Entry;
 public class MapExample
 {
     public static void main(String[] args) {
+
         Map<String, Integer> map = new HashMap<String,Integer>();
         map.put("blue",96);
         map.put("hong",86);
