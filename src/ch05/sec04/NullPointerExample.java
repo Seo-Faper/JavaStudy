@@ -9,6 +9,5 @@ public class NullPointerExample
         String str = null;
         //System.out.println(str);
 
-
     }
 }
