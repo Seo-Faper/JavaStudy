@@ -17,7 +17,7 @@ public class Car
     public static void main(String[] args) {
         simulate(); // 정적 메소드 호출
 
-        Car myCar = new Car(); //객체 생성
+        Car myCar = new Car();  //객체 생성
         // 인스턴스 멤버 사용
         myCar.speed = 60;
         myCar.run();
