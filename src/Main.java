@@ -5,6 +5,7 @@ public class Main {
         
        Scanner sc = new Scanner(System.in);
         int n = 0;
+
         int[] scores = null;
         while (true){
 
