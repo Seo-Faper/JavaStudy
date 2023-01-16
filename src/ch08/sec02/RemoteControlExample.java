@@ -6,5 +6,8 @@ public class RemoteControlExample
         RemoteControl rc;
         rc = new Television();
         rc.turnOn();
+
+        rc = new Audio();
+        rc.turnOn();
     }
 }
