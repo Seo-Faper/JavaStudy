@@ -25,4 +25,12 @@ public class Student {
         }
         return false;
     }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "no=" + no +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }
