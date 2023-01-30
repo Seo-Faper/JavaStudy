@@ -20,6 +20,5 @@ public class SortingExample {
                 .sorted(Comparator.reverseOrder())
                 .forEach(e->System.out.println(e.getName()+" : "+e.getScore()));
 
-
     }
 }
