@@ -17,7 +17,8 @@ public class FlatMappingExample {
         list2.stream().flatMapToInt(e->{
             String[] strArr = e.split(",");
             int[] intArr = new int[strArr.length];
-            for(int i = 0; i<strArr.length; i++){
+            for(int i = 0; i<strArr.length; i++)
+            {
                 intArr[i] = Integer.parseInt(strArr[i].trim());
             }
             return Arrays.stream(intArr);
