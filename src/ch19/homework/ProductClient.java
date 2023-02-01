@@ -16,13 +16,13 @@ public class ProductClient {
     private Scanner sc;
 
     public static void main(String[] args) {
-        ProductServer productServer = new ProductServer();
+        ProductClient productClient = new ProductClient();
         try{
             System.out.println("클라이언트 start()");
-            productServer.start();
+            productClient.start();
         }catch (IOException e){
             e.printStackTrace();
-            productServer.stop();
+            productClient.stop();
 
         }
     }
@@ -40,7 +40,7 @@ public class ProductClient {
     }
 
     private void showProduct() throws IOException {
-        System.out.println("[상품 목록");
+        System.out.println("[상품 목록]");
         System.out.println("-----------------------------------------------");
         System.out.println("no\t\tname\t\t\t\t\t\t\tprice\t\t\t\tstock");
         System.out.println("-----------------------------------------------");
@@ -52,15 +52,21 @@ public class ProductClient {
         dos.flush();
 
         JSONObject response = new JSONObject(dis.readUTF());
+
         if(response.getString("status").equals("success")){
             JSONArray data = response.getJSONArray("data");
             for(int i = 0; i<data.length();i++){
                 JSONObject product = data.getJSONObject(i);
-                System.out.println(product.getString("no")+"\t\t"+product.getString("name")+"\t\t\t\t\t\t\t"
-                        +product.getString("price")
-                        +"\t\t\t\t"+product.getString("stock"));
+                System.out.printf(
+                        "%-6d%-30s%-15d%-10d\n",
+                        product.getInt("no"),
+                        product.getString("name"),
+                        product.getInt("price"),
+                        product.getInt("stock")
+                );
             }
         }
+
         showMenu();
     }
 

@@ -60,6 +60,7 @@ public class ProductServer {
                 this.socket = socket;
                 this.dis = new DataInputStream(socket.getInputStream());
                 this.dos = new DataOutputStream(socket.getOutputStream());
+                receive();
             }catch(IOException e){
 
             }
@@ -72,7 +73,7 @@ public class ProductServer {
 
                         JSONObject request = new JSONObject(receiveJson);
                         int sel = request.getInt("menu");
-                        
+                        System.out.println(sel);
                         if(sel==0) list(request);
                         else if(sel==1) create(request);
                         else if(sel==2) update(request);
