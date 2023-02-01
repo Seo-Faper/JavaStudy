@@ -1,5 +1,7 @@
 package ch19.sec03.exam02;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
@@ -9,6 +11,7 @@ import java.util.Scanner;
 public class EchoServer {
     private static ServerSocket serverSocket = null;
     public static void main(String[] args) {
+
         System.out.println("----------------------------------------------------");
         System.out.println("서버를 종료하려면 q 또는 Q를 입력하고 Enter 키를 입력하세요.");
         System.out.println("----------------------------------------------------");
@@ -44,8 +47,19 @@ public class EchoServer {
                                 (InetSocketAddress) socket.getRemoteSocketAddress();
                         System.out.println("[서버]"+isa.getHostName()+"의 연결 요청을 수락함");
 
+                        //데이터 받기
+                        DataInputStream dis = new DataInputStream(socket.getInputStream());
+                        String message = dis.readUTF();
+
+
+                        //데이터 보내기
+                        DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
+                        dos.writeUTF(message);
+                        System.out.println("[서버] 받은 데이터를 다시 보냄: "+message);
+                        dos.flush();
+
                         socket.close();
-                        System.out.println("[서버] "+isa.getHostName()+"의연결을 끊음");
+                        System.out.println("[서버] "+isa.getHostName()+"의 연결을 끊음");
                     }
                 }catch(IOException e){
                     System.out.println("[서버] "+e.getMessage());
