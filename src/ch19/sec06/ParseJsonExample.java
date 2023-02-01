@@ -28,6 +28,10 @@ public class ParseJsonExample {
         System.out.println("mobile: "+tel.getString("mobile"));
 
         JSONArray skill = root.getJSONArray("skill");
+        System.out.print ("skill: ");
+        for(int i = 0; i<skill.length(); i++){
+            System.out.print (skill.get(i)+", ");
+        }
 
     }
 }
