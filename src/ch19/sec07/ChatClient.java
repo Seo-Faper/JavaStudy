@@ -25,6 +25,7 @@ public class ChatClient {
            try{
                while (true){
                    String json = dis.readUTF();
+                   //System.out.println("[클라] "+json);
                    JSONObject root = new JSONObject(json);
                    String clientIp = root.getString("clientIp");
                    String chatName = root.getString("chatName");
