@@ -6,6 +6,8 @@ import java.util.Scanner;
 public class BoardExample3 {
     private Scanner sc = new Scanner(System.in);
     private Connection conn;
+    private String name = "";
+    private boolean session = false;
 
     public BoardExample3(){
         try {
@@ -25,7 +27,8 @@ public class BoardExample3 {
         }
     }
     public void list(){
-        System.out.println("[NEW 게시물 목록]");
+        if(session)  System.out.println("[게시물 목록] 사용자 :"+name);
+        else System.out.println("[게시물 목록]");
         System.out.println("-------------------------------------------------------");
         System.out.printf("%-6s%-12s%-16s%-40s\n", "no","writer","date","title");
         System.out.println("-------------------------------------------------------");
@@ -58,7 +61,8 @@ public class BoardExample3 {
     }
     public void mainMenu(){
         System.out.println("------------------------------------------------------");
-        System.out.println("메인 메뉴: 1.Create | 2.Read | 3.Clear | 4.Exit");
+        if(session) System.out.println("메인 메뉴: 1.Create | 2.Read | 3.Clear | 4.Join | 5.LogOut | 6.Exit ");
+        else System.out.println("메인 메뉴: 1.Create | 2.Read | 3.Clear | 4.Join | 5.Login | 6.Exit ");
         System.out.print("메뉴 선택: ");
         System.out.println("");
         String sel = sc.nextLine();
@@ -66,8 +70,97 @@ public class BoardExample3 {
             case "1" -> create();
             case "2" -> read();
             case "3" -> clear();
-            case "4" -> exit();
+            case "4" -> join();
+            case "5" -> {
+
+                if(!session)login();
+                else{
+                    session = false;
+                    name = "";
+                    list();
+                }
+
+            }
+            case "6" -> exit();
         }
+    }
+
+    private void join() {
+        User user = new User();
+        System.out.println("[새로운 사용자 등록]");
+        System.out.print("아이디: ");
+        user.setUserId(sc.nextLine());
+        System.out.print("이름: ");
+        user.setUserName(sc.nextLine());
+        System.out.print("비밀번호: ");
+        user.setUserPassword(sc.nextLine());
+        System.out.println("나이: ");
+        user.setUserAge(Integer.parseInt(sc.nextLine()));
+        System.out.println("이메일: ");
+        user.setUserEmail(sc.nextLine());
+        System.out.println("------------------------------------------------------");
+        System.out.println("보조 메뉴 : 1. OK | 2. Cancel");
+        System.out.print("메뉴 선택 : ");
+        String menuNo = sc.nextLine();
+        if(menuNo.equals("1")){
+            try{
+                String sql = "" +
+                        "INSERT INTO users (userid, username, userpassword, userage, useremail) " +
+                        "VALUES (?, ?, ?, ?, ?)";
+                PreparedStatement pstmt = conn.prepareStatement(sql);
+                pstmt.setString(1,user.getUserId());
+                pstmt.setString(2, user.getUserName());
+                pstmt.setString(3, user.getUserPassword());
+                pstmt.setInt(4, user.getUserAge());
+                pstmt.setString(5, user.getUserEmail());
+                pstmt.executeUpdate();
+                pstmt.close();
+            }catch(Exception e){
+
+            }
+        }
+        list();
+    }
+
+    private void login() {
+        String id = "";
+        String pwd = "";
+        System.out.println("[로그인]");
+        System.out.print("아이디: ");
+        id = sc.nextLine();
+        System.out.print("비밀번호: ");
+        pwd = sc.nextLine();
+        System.out.println("------------------------------------------------------");
+        System.out.println("보조 메뉴 : 1. OK | 2. Cancel");
+        System.out.print("메뉴 선택 : ");
+        String menuNo = sc.nextLine();
+        if(menuNo.equals("1")){
+            try{
+                String sql = ""+
+                        "SELECT userid, username, userpassword, userage, useremail "+
+                        "FROM users "+
+                        "WHERE userid=?";
+
+                PreparedStatement psmt = conn.prepareStatement(sql);
+                psmt.setString(1,id);
+
+                ResultSet rs = psmt.executeQuery();
+                if(rs.next()){
+                    if(id.equals(rs.getString("userid")) && pwd.equals(rs.getString("userpassword"))){
+                        session = true;
+                        name = rs.getString("username");
+                        list();
+                    }
+                }else{
+                    System.out.println("아이디가 존재하지 않습니다.");
+                    join();
+                }
+            }catch(Exception e){
+
+            }
+        }
+        list();
+
     }
 
     private void clear() {
