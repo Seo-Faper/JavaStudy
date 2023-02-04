@@ -23,11 +23,11 @@ public class BoardWithFileInsertExample {
              "VALUES (?, ?, ?, now(), ?, ?)";
 
             PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            pstmt.setString(1,"눈 오는 날");
-            pstmt.setString(2,"함박눈이 내려요.");
-            pstmt.setString(3,"winter");
-            pstmt.setString(4,"snowman.jpg");
-            pstmt.setBlob(5, new FileInputStream("src/ch20/mysql/sec06/snowman.jpg"));
+            pstmt.setString(1,"비오는 날");
+            pstmt.setString(2,"폭우가 내려요.");
+            pstmt.setString(3,"rainy");
+            pstmt.setString(4,"rainy.png");
+            pstmt.setBlob(5, new FileInputStream("src/ch20/mysql/sec06/rainy.png"));
             int rows = pstmt.executeUpdate();
             System.out.println("수정된 행 수 : "+rows);
 

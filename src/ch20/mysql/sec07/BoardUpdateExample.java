@@ -31,10 +31,10 @@ public class BoardUpdateExample {
                     .toString();
 
             PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1,"눈사람");
-            pstmt.setString(2,"눈으로 만든 사람");
-            pstmt.setString(3,"snowman.jpg");
-            pstmt.setBlob(4, new FileInputStream("src/ch20/mysql/sec07/snowman.jpg"));
+            pstmt.setString(1,"봄의 정원");
+            pstmt.setString(2,"정원의 꽃 카직스네요.");
+            pstmt.setString(3,"spring.png");
+            pstmt.setBlob(4, new FileInputStream("src/ch20/mysql/sec07/spring.png"));
             pstmt.setInt(5,2);
             int rows = pstmt.executeUpdate();
             System.out.println("수정된 행 수 : "+rows);
