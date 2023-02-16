@@ -1,3 +1,5 @@
+import java.util.concurrent.atomic.AtomicInteger;
+
 public class CountingTest {
     public static void main(String[] args) {
         Count count = new Count();
@@ -13,8 +15,8 @@ public class CountingTest {
     }
 }
 class Count {
-
-    private int count;
-    public int view() {return count++;}
-    public int getCount() {return count;}
+    private AtomicInteger count = new AtomicInteger(1);
+    public int view() {
+        return count.getAndIncrement();
+    }
 }
